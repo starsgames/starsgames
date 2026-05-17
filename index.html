@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sellertopup.id — Authorized Premium Voucher Platform</title>
+    <style>
+        :root {
+            --bg-main: #060913;
+            --bg-surface: #0f1626;
+            --bg-input: #172237;
+            --primary: #2563eb;
+            --accent: #38bdf8;
+            --success: #10b981;
+            --text-white: #f8fafc;
+            --text-muted: #64748b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-white); padding: 20px 10px; }
+        .wrapper { max-width: 600px; margin: 0 auto; }
+        header { text-align: center; padding: 30px 0; }
+        header h1 { font-size: 2rem; color: #fff; }
+        header p { color: var(--text-muted); font-size: 0.9rem; }
+        .card-panel { background-color: var(--bg-surface); border-radius: 24px; padding: 25px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; }
+        input[type="text"], select { width: 100%; padding: 15px; background-color: var(--bg-input); border: none; border-radius: 15px; color: white; font-size: 1rem; outline: none; margin-bottom: 10px; }
+        .grid-diamond { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .item-diamond { background-color: var(--bg-input); border: 2px solid transparent; border-radius: 18px; padding: 15px; text-align: center; cursor: pointer; position: relative; }
+        .item-diamond.active { border-color: var(--primary); }
+        .badge-bonus { position: absolute; top: 0; right: 0; background: var(--success); color: white; font-size: 0.65rem; padding: 2px 8px; border-bottom-left-radius: 10px; }
+        .grid-payment { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .item-payment { background-color: var(--bg-input); border: 2px solid transparent; border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; font-weight: bold; }
+        .item-payment.active { border-color: var(--success); }
+        #invoice-popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); justify-content: center; align-items: center; padding: 20px; }
+        .modal { background: var(--bg-surface); padding: 25px; border-radius: 24px; max-width: 400px; width: 100%; text-align: center; }
+        .img-qris { max-width: 180px; width: 100%; margin-top: 15px; border-radius: 10px; }
+        .btn-order { width: 100%; background: var(--primary); color: white; border: none; padding: 18px; font-size: 1.1rem; font-weight: bold; border-radius: 18px; cursor: pointer; margin-top: 10px; }
+        .btn-close { width: 100%; background: none; color: var(--text-muted); border: none; margin-top: 15px; cursor: pointer; }
+        .legal-text { font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <header>
+        <h1>sellertopup.id</h1>
+        <p>Premium Digital Voucher Distribution Platform</p>
+    </header>
+
+    <!-- STEP 1 -->
+    <div class="card-panel">
+        <div class="card-title">1. Akun Destinasi</div>
+        <input type="text" id="user-id" placeholder="Masukkan ID Pengguna (Contoh: 87234112)">
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="card-panel">
+        <div class="card-title">2. Pilih Kategori Koin</div>
+        <div class="grid-diamond">
+            <div class="item-diamond" onclick="setItem(this, '5 Koin', 1000)"><span style="font-weight:bold;">5 Koin</span><br><span style="color:var(--accent); font-size:0.85rem;">Rp 1.000</span></div>
+            <div class="item-diamond" onclick="setItem(this, '12 Koin', 2000)"><span style="font-weight:bold;">12 Koin</span><br><span style="color:var(--accent); font-size:0.85rem;">Rp 2.000</span></div>
+            <div class="item-diamond" onclick="setItem(this, '50 Koin', 8000)"><span style="font-weight:bold;">50 Koin</span><br><span style="color:var(--accent); font-size:0.85rem;">Rp 8.000</span></div>
+            <div class="item-diamond" onclick="setItem(this, '140 Koin', 20000)"><span style="font-weight:bold;">140 Koin</span><br><span style="color:var(--accent); font-size:0.85rem;">Rp 20.000</span></div>
+            <div class="item-diamond" onclick="setItem(this, '355 Koin', 48000)"><span style="font-weight:bold;">355 Koin</span><br><span style="color:var(--accent); font-size:0.85rem;">Rp 48.000</span></div>
+            
+            <!-- Bonus Atas 50k -->
+            <div class="item-diamond" onclick="setItem(this, '720 Koin', 95000)"><div class="badge-bonus">+20 Bns</div><span style="font-weight:bold;">720 Koin</span><br><span style="color:var(--accent); font-size:0.85rem;">Rp 95.000</span></div>
+            <div class="item-diamond" onclick="setItem(this, '1450 Koin', 190000)"><div class="badge-bonus">+40 Bns</div><span style="font-weight:bold;">1450 Koin</span><br><span style="color:var(--accent); font-size:0.85rem;">Rp 190.000</span></div>
+            <div class="item-diamond" onclick="setItem(this, '2180 Koin', 280000)"><div class="badge-bonus">+60 Bns</div><span style="font-weight:bold;">2180 Koin</span><br><span style="color:var(--accent); font-size:0.85rem;">Rp 280.000</span></div>
+            <div class="item-diamond" onclick="setItem(this, '4000 Koin', 500000)"><div class="badge-bonus">+100 Bns</div><span style="font-weight:bold;">4000 Koin</span><br><span style="color:var(--accent); font-size:0.85rem;">Rp 500.000</span></div>
+        </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="card-panel">
+        <div class="card-title">3. Metode Pembayaran</div>
+        <div class="grid-payment">
+            <div class="item-payment" onclick="setPay(this, 'QRIS')">QRIS</div>
+            <div class="item-payment" onclick="setPay(this, 'DANA')">DANA</div>
+            <div class="item-payment" onclick="setPay(this, 'GOPAY')">GoPay</div>
+            <div class="item-payment" onclick="setPay(this, 'OVO')">OVO</div>
+        </div>
+    </div>
+
+    <button class="btn-order" onclick="openInv()">Konfirmasi Transaksi</button>
+    
+    <div class="legal-text">
+        Layanan distribusi voucher utilitas digital berlisensi aman. Seluruh hak merek dagang sepenuhnya milik penerbit game masing-masing.
+    </div>
+</div>
+
+<!-- INVOICE POPUP -->
+<div id="invoice-popup">
+    <div class="modal">
+        <h3 style="color:var(--success); margin-bottom:15px;">TAGIHAN AKTIF</h3>
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:5px;">Silakan selesaikan pembayaran untuk ID Anda:</p>
+        <p id="txt-id" style="font-weight:bold; font-size:1.1rem; margin-bottom:15px;">-</p>
+        
+        <div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:12px; text-align:left; font-size:0.9rem; margin-bottom:15px;">
+            <div style="display:flex; justify-content:between; margin-bottom:5px;"><span>Produk: </span><span id="txt-prod" style="margin-left:auto; font-weight:bold;">-</span></div>
+            <div style="display:flex; justify-content:between;"><span>Total: </span><span id="txt-total" style="margin-left:auto; font-weight:bold; color:var(--accent);">-</span></div>
+        </div>
+
+        <div id="box-instruksi"></div>
+        <button class="btn-close" onclick="closeInv()">Batalkan Pesanan</button>
+    </div>
+</div>
+
+<script>
+    let pProd = "", pPrice = 0, pMethod = "";
+
+    function setItem(el, name, price) {
+        document.querySelectorAll('.item-diamond').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        pProd = name; pPrice = price;
+    }
+    function setPay(el, method) {
+        document.querySelectorAll('.item-payment').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        pMethod = method;
+    }
+    function openInv() {
+        const id = document.getElementById('user-id').value;
+        if(!id) { alert('Isi ID dulu bro!'); return; }
+        if(!pProd) { alert('Pilih nominal koin dulu!'); return; }
+        if(!pMethod) { alert('Pilih pembayaran dulu!'); return; }
+
+        document.getElementById('txt-id').innerText = id;
+        document.getElementById('txt-prod').innerText = pProd;
+        document.getElementById('txt-total').innerText = 'Rp ' + pPrice.toLocaleString('id-ID');
+
+        const inst = document.getElementById('box-instruksi');
+        if(pMethod === 'QRIS') {
+            inst.innerHTML = `<p style="font-size:0.8rem; color:white;">Scan QRIS Resmi di bawah:</p><img src="https://i.ibb.co.com/4g0YgV32/image.png" class="img-qris">`;
+        } else {
+            inst.innerHTML = `<p style="font-size:0.8rem; color:white;">Transfer Manual ${pMethod}:</p><p style="font-size:1.3rem; font-weight:bold; color:var(--success); margin-top:5px;">081234567890</p><p style="font-size:0.75rem; color:var(--text-muted);">A/N SELLER TOPUP</p>`;
+        }
+        document.getElementById('invoice-popup').style.display = 'flex';
+    }
+    function closeInv() { document.getElementById('invoice-popup').style.display = 'none'; }
+</script>
+</body>
+</html>
